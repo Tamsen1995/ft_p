@@ -1,0 +1,49 @@
+
+- REQS SERVER:
+
+- Opens a port on the entered parameter
+	- Whatever port number the user enters, the server will listen on
+
+- You can connect yourself with the nc command
+	- when typing in nc 127.0.0.1 4242
+	- and the server is listening in on the port 4242 then
+	- we should be able to connect ourselves
+
+- Multiple connections
+	- The server can receive several clients at a time
+
+- Certain commands must be executed by the server when sent through the client
+	- So the ls for instance needs to list the current server's directory
+	- the cd must change the current directory of the server
+	- we can interrupt the current connection with the quit command
+	- we can show the server's path with the pwd command
+
+
+
+
+- ( I need to figure out what exactly a server implies. Is it just the running program ? Where do the files on the server come from
+- is it a directory ? )
+- get <file>
+	- With the get command we can get the server to send a file towards the client
+	- You also have to be able to get the binary file of the server
+- put <file>
+	- With the put command we can send a file towards the server through the client.
+	- And also be able to upload the client's binary onto the server
+
+
+
+- REQS CLIENT: 
+
+- ./client 127.0.0.1.4242
+	- Does the client connect itself when executing this command ?
+
+- ./client localhost 4242
+	- Does the client connect itself when executing this command ?
+
+- the client must be able to work with the provided server
+	- ls
+	- can you pass options into the ls ?
+	- can we exit the program with the quit command ?
+	- can we go to a different server directory with cd ?
+
+- get and put file just like with the server
