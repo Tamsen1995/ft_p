@@ -14,7 +14,7 @@ int create_client(char *addr, int port)
 
 	proto = getprotobyname("tcp");
 	if (proto == 0)
-		return (-1);
+		return (-1); 
 	sock = socket(PF_INET, SOCK_STREAM, proto->p_proto);
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
@@ -34,7 +34,7 @@ int main(int ac, char **av)
 
 	if (ac != 3)
 		usage(av[0]);
-	port = ft_atoi(av[1]);
+	port = ft_atoi(av[2]);
 	sock = create_client(av[1], port);
 	write(sock, "bonjour\n", 8);
 	close(sock);

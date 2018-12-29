@@ -4,32 +4,44 @@ FLAGS = -g -Wall -Wextra -Werror -I includes
 PRINTF = libft/printf/libftprintf.a
 LIBFT = libft/libft.a
 
-NAME_ot = server
+NAME_se = server
+NAME_cli = client
 
-SRC_ot = src/server.c
+SRC_se = src/server.c
 
-OBJ_ot = $(addsuffix .o, $(basename $(SRC_ot)))
+SRC_cli = src/client.c
 
-all: $(LIBFT) $(NAME_ot) 
+OBJ_se = $(addsuffix .o, $(basename $(SRC_se)))
+OBJ_cli = $(addsuffix .o, $(basename $(SRC_cli)))
+
+all: $(LIBFT) $(NAME_se) $(NAME_cli)
 
 $(LIBFT):
 	make -C libft
 
-$(NAME_ot):$(LIBFT) $(NAME_ot) $(OBJ_ot)
+$(NAME_se):$(LIBFT) $(NAME_se) $(OBJ_se)
 	@echo "building binary file"
-	$(CC) $(FLAGS) $(SRC_ot) -o $(NAME_ot) -I -lft $(LIBFT) $(PRINTF)
+	$(CC) $(FLAGS) $(SRC_se) -o $(NAME_se) -I -lft $(LIBFT) $(PRINTF)
+
+$(NAME_cli):$(LIBFT) $(NAME_cli) $(OBJ_cli)
+	@echo "building client binary file"
+	$(CC) $(FLAGS) $(SRC_cli) -o $(NAME_cli) -I -lft $(LIBFT) $(PRINTF)
 
 %.o: %.c ft_ls.h
 		clang $(FLAG) -c $< -o $@
 
 clean:
-	rm -f $(OBJ_ot)
+	rm -f $(OBJ_se)
+	rm -rf $(OBJ_cli)
+	@make clean -C libft/
 	@make clean -C libft/
 
 fclean: clean
-	@echo "delete $(NAME_ot)"
-	@rm -f $(NAME_ot)
+	@echo "delete $(NAME_se)"
+	@rm -f $(NAME_se)
+	@rm -rf $(NAME_cli)
 	rm -rf server.dSYM
+	rm -rf client.dSYM
 	@make fclean -C libft/
 
 re: fclean all
