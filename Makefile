@@ -6,7 +6,7 @@ LIBFT = libft/libft.a
 
 NAME_ot = server
 
-SRC_ot = src/main.c
+SRC_ot = src/server.c
 
 OBJ_ot = $(addsuffix .o, $(basename $(SRC_ot)))
 
