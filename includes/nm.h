@@ -4,43 +4,55 @@
 #define PROT PROT_READ | PROT_WRITE
 #define ANON MAP_PRIVATE | MAP_ANONYMOUS
 
-# define TXT "__TEXT"
-# define TUT "__text"
+#define TXT "__TEXT"
+#define TUT "__text"
+#define BUFF_SIZE 8
 
-# include "./libft.h"
-# include <mach-o/loader.h>
-# include <mach-o/nlist.h>
-# include <mach-o/fat.h>
-# include <ar.h>
-# include <mach-o/ranlib.h>
+#include "./libft.h"
+#include <mach-o/loader.h>
+#include <mach-o/nlist.h>
+#include <mach-o/fat.h>
+#include <ar.h>
+#include <mach-o/ranlib.h>
+#include <termcap.h>
+#include <termios.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <sys/param.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <fcntl.h>
+#include <stdio.h>
 
-typedef struct			s_symbols
+typedef struct s_symbols
 {
-	unsigned long		value;
-	char				type;
-	char				*name;
-	struct s_symbols	*next;
-	struct s_symbols	*prev;
-}						t_symbols;
+	unsigned long value;
+	char type;
+	char *name;
+	struct s_symbols *next;
+	struct s_symbols *prev;
+} t_symbols;
 
-typedef struct 			s_section
+typedef struct s_section
 {
-	char				*name;
-	unsigned int 		nb;
-	struct s_section	*next;
-	struct s_section	*prev;
-}						t_section;
+	char *name;
+	unsigned int nb;
+	struct s_section *next;
+	struct s_section *prev;
+} t_section;
 
 /*
 ** the s_lsection function
 ** is used only exclusively in the nm
 */
 
-typedef struct 			s_lsection
+typedef struct s_lsection
 {
-	struct s_section	*first;
-	struct s_section	*last;
-}						t_lsection;
+	struct s_section *first;
+	struct s_section *last;
+} t_lsection;
 
 /*
 ** For the otool I will use a more versatile
@@ -49,13 +61,13 @@ typedef struct 			s_lsection
 ** information which we'll need
 */
 
-typedef struct 	s_section_list
+typedef struct s_section_list
 {
-	struct section_64			*section_64;
-	struct section				*section_32;
-	struct s_section_list		*next;
-	struct s_section_list		*prev;
-}				t_section_list;
+	struct section_64 *section_64;
+	struct section *section_32;
+	struct s_section_list *next;
+	struct s_section_list *prev;
+} t_section_list;
 
 /*
 ** in the otool I need a structure which ensures me
@@ -63,14 +75,19 @@ typedef struct 	s_section_list
 ** all the offsets of the ranlib for me
 */
 
-typedef struct	s_ran_offset
+typedef struct s_ran_offset
 {
 	uint32_t offset;
 	uint32_t strx;
 	struct s_ran_offset *next;
 	struct s_ran_offset *prev;
-}				t_ran_offset;
+} t_ran_offset;
 
+/*
+** GNL
+*/
+
+int get_next_line(int const fd, char **line);
 
 /*
 ** functions created during the otool
@@ -85,7 +102,6 @@ void add_sec(t_section_list **sec_list, struct section *sec, struct section_64 *
 void go_archive(char *ptr, char *filename);
 void process_archs(char *ptr, t_ran_offset *list, char *filename);
 int get_archive_size(char *name);
-
 
 /*
 ** These functions were made for the nm

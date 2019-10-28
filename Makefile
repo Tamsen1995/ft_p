@@ -7,9 +7,14 @@ LIBFT = libft/libft.a
 NAME_se = server
 NAME_cli = client
 
-SRC_se = src/server.c
+SRC_se = src/server.c \
+		src/get_next_line.c
 
-SRC_cli = src/client.c
+
+
+SRC_cli = src/client.c \
+		src/get_next_line.c
+
 
 OBJ_se = $(addsuffix .o, $(basename $(SRC_se)))
 OBJ_cli = $(addsuffix .o, $(basename $(SRC_cli)))

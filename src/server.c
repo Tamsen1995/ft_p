@@ -1,4 +1,4 @@
-#include "../includes/libft.h"
+#include "../includes/nm.h"
 
 void usage(char *str)
 {
@@ -8,9 +8,9 @@ void usage(char *str)
 
 int create_server(int port)
 {
-	int 				sock;
-	struct protoent		*proto;
-	struct sockaddr_in	sin;
+	int sock;
+	struct protoent *proto;
+	struct sockaddr_in sin;
 
 	proto = getprotobyname("tcp");
 	if (proto == 0)
@@ -19,6 +19,7 @@ int create_server(int port)
 	sin.sin_family = AF_INET;
 	sin.sin_port = htons(port);
 	sin.sin_addr.s_addr = htonl(INADDR_ANY);
+	// bind the socket config so to speak to the socket in question
 	if (bind(sock, (const struct sockaddr *)&sin, sizeof(sin)))
 	{
 		ft_putendl("Bind error");
@@ -30,13 +31,13 @@ int create_server(int port)
 
 int main(int ac, char **av)
 {
-	int					port;
-	int					sock;
-	int					cs;
-	unsigned int		cslen;
-	struct sockaddr_in	csin;
-	int					r;
-	char				buf[1024];
+	int port;
+	int sock;
+	int cs;
+	unsigned int cslen;
+	struct sockaddr_in csin;
+	int r;
+	char buf[1024];
 
 	port = 0;
 	if (ac != 2)
