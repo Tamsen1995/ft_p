@@ -41,9 +41,9 @@ int main(int ac, char **av)
 	int r = 0;
 	while (42)
 	{
+		ft_putstr("chingdao$>:  ");
 		r = get_next_line(0, &line);
 		write(sock, line, 8);
-		printf("chingdao %d\n", r);
 	}
 	close(sock);
 	return (0);
