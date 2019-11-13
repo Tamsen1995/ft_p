@@ -89,49 +89,11 @@ typedef struct s_ran_offset
 
 int get_next_line(int const fd, char **line);
 
-/*
-** functions created during the otool
-*/
-void go_fat_big(char *ptr);
-void go_fat_lil(char *ptr);
-void output_sections_64(char *ptr, t_section_list *sec_list, char *filename);
-void output_sections_32(char *ptr, t_section_list *sec_list, char *filename);
-void ft_otool(char *ptr, char *filename);
-void make_sec_list(char *ptr, char *filename, T_BOOL is_64);
-void add_sec(t_section_list **sec_list, struct section *sec, struct section_64 *sec_64);
-void go_archive(char *ptr, char *filename);
-void process_archs(char *ptr, t_ran_offset *list, char *filename);
-int get_archive_size(char *name);
-
-/*
-** These functions were made for the nm
-*/
-
-void ft_nm(char *ptr);
-char determine_type(uint32_t type, uint32_t n_sect, t_lsection *sec_list, int addr);
-void handle_64(char *ptr);
-t_lsection *get_sections_64(char *ptr);
-void process_symtab_64(struct symtab_command *sym, char *ptr, t_lsection *sec_list);
-void add_symbols_64(char *strable, struct nlist_64 list, t_lsection *sec_list, t_symbols **sym_list);
-void handle_32(char *ptr);
-t_lsection *get_sections_32(char *ptr);
-void process_symtab_32(struct symtab_command *sym, char *ptr, t_lsection *sec_list);
-void add_symbols_32(char *strtable, struct nlist list, t_lsection *sec_list, t_symbols **sym_list);
-void handle_fat_big(char *ptr);
-void handle_fat_lil(char *ptr);
-
-void add_to_list(char *sectname, t_lsection *list);
-t_symbols *add_before(t_symbols *add_bef_this, t_symbols *add);
-uint32_t swap_uint32(uint32_t val);
-t_symbols *bubble_sort(t_symbols *sym_list);
-t_symbols *del_dupl_nd_stabs(t_symbols *sym_list);
-void free_sec_list_nm(t_lsection *sec_list);
-
-/*
-Testing functions
-*/
-
-void print_symbols(t_symbols *sym_list, T_BOOL is_64);
-void print_syms_prev(t_symbols *sym_list);
+int create_server(int port);
+void make_server_directory();
+void usage(char *str);
+void accept_client(int sock);
+void manage_client(int cs);
+void relay_commands(char *buf);
 
 #endif
