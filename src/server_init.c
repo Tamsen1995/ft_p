@@ -6,28 +6,28 @@ void usage(char *str)
 	exit(-1);
 }
 
-void make_server_directory()
+char *make_server_directory()
 {
 	char buf[1024];
 	int r;
-	char *tmp;
+	char *dir_path;
 	char *aux;
 
 	getcwd(buf, 1023);
 	aux = ft_strdup("/server_dir");
-	tmp = ft_strjoin((const char *)buf, aux);
-	r = mkdir(tmp, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH);
-	if (r == 0 && chdir(tmp) == 0)
+	dir_path = ft_strjoin((const char *)buf, aux);
+	r = mkdir(dir_path, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH);
+	if (r == 0 && chdir(dir_path) == 0)
 	{
-		free(tmp);
 		free(aux);
-		return;
+		return (dir_path);
 	}
 	else if (r == -1)
 	{
 		ft_putendl("An error occurred whilst making a server directory");
 		exit(-1);
 	}
+	return (NULL);
 }
 
 int create_server(int port)
@@ -49,7 +49,6 @@ int create_server(int port)
 		ft_putendl("Bind error");
 		exit(2);
 	}
-	make_server_directory();
 	listen(sock, 42);
 	return (sock);
 }

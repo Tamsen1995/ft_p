@@ -2,13 +2,17 @@
 
 // the buf being the buffer of commands
 // this function relays the commands to their appropiate flow
-void relay_commands(char *buf)
+void relay_commands(char *buf, struct s_server_truth *server_truth)
 {
-	ft_putstr(buf);
+
+	if (ft_strcmp(buf, "pwd") == 0)
+	{
+		ft_putstr(server_truth->server_dir_path);
+	}
 }
 
 // cs means connected socket
-void manage_client(int cs)
+void manage_client(int cs, struct s_server_truth *server_truth)
 {
 	int r;
 	char buf[1024];
@@ -17,11 +21,11 @@ void manage_client(int cs)
 	{
 		buf[r] = '\0';
 		if (r > 0)
-			relay_commands(buf);
+			relay_commands(buf, server_truth);
 	}
 }
 
-void accept_client(int sock)
+void accept_client(int sock, struct s_server_truth *server_truth)
 {
 	int cs;
 	unsigned int cslen;
@@ -35,7 +39,7 @@ void accept_client(int sock)
 		// child process makes pid 0
 		// in here the server has to manage the client's requests
 		while (42)
-			manage_client(cs);
+			manage_client(cs, server_truth);
 	}
 	else if (pid != 0)
 	{
@@ -49,13 +53,21 @@ int main(int ac, char **av)
 {
 	int port;
 	int sock;
+	struct s_server_truth server_truth;
 
 	port = 0;
 	if (ac != 2)
 		usage(av[1]);
 	port = ft_atoi(av[1]);
 	sock = create_server(port);
-	accept_client(sock);
+	server_truth.server_dir_path = make_server_directory();
+
+	if (!server_truth.server_dir_path)
+	{
+		ft_putendl("A dir path could not be created");
+		exit(-1);
+	}
+	accept_client(sock, &server_truth);
 	close(sock);
 	return (0);
 }

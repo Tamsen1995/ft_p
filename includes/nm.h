@@ -26,22 +26,10 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-typedef struct s_symbols
+typedef struct s_server_truth
 {
-	unsigned long value;
-	char type;
-	char *name;
-	struct s_symbols *next;
-	struct s_symbols *prev;
-} t_symbols;
-
-typedef struct s_section
-{
-	char *name;
-	unsigned int nb;
-	struct s_section *next;
-	struct s_section *prev;
-} t_section;
+	char *server_dir_path;
+} t_server_truth;
 
 /*
 ** the s_lsection function
@@ -90,10 +78,10 @@ typedef struct s_ran_offset
 int get_next_line(int const fd, char **line);
 
 int create_server(int port);
-void make_server_directory();
+char *make_server_directory();
 void usage(char *str);
-void accept_client(int sock);
-void manage_client(int cs);
-void relay_commands(char *buf);
+void accept_client(int sock, struct s_server_truth *server_truth);
+void manage_client(int cs, struct s_server_truth *server_truth);
+void relay_commands(char *buf, struct s_server_truth *server_truth);
 
 #endif
