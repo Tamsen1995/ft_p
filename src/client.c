@@ -43,7 +43,7 @@ int main(int ac, char **av)
 	{
 		ft_putstr("chingdao$>:  ");
 		r = get_next_line(0, &line);
-		write(sock, line, 8);
+		write(sock, line, ft_strlen(line));
 	}
 	close(sock);
 	return (0);
