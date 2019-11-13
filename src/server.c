@@ -6,6 +6,13 @@ void usage(char *str)
 	exit(-1);
 }
 
+void make_server_directory()
+{
+	char buf[1024];
+	getcwd(buf, 1023);
+	ft_putstr(buf);
+}
+
 int create_server(int port)
 {
 	int sock;
@@ -28,6 +35,7 @@ int create_server(int port)
 		ft_putendl("Bind error");
 		exit(2);
 	}
+	make_server_directory();
 	listen(sock, 42);
 	return (sock);
 }
@@ -37,7 +45,6 @@ int create_server(int port)
 void relay_commands(char *buf)
 {
 	ft_putstr(buf);
-
 }
 
 // cs means connected socket
@@ -54,24 +61,15 @@ void manage_client(int cs)
 	}
 }
 
-int main(int ac, char **av)
+void accept_client(int sock)
 {
-	int port;
-	int sock;
 	int cs;
 	unsigned int cslen;
-	struct sockaddr_in csin;
 	int pid;
+	struct sockaddr_in csin;
 
-	port = 0;
-	if (ac != 2)
-		usage(av[1]);
-	port = ft_atoi(av[1]);
-	sock = create_server(port);
 	cs = accept(sock, (struct sockaddr *)&csin, &cslen);
-
 	pid = fork();
-
 	if (pid == 0)
 	{
 		// child process makes pid 0
@@ -81,15 +79,23 @@ int main(int ac, char **av)
 	}
 	else if (pid != 0)
 	{
+		// parent process makes pid not 0
 		wait4(-1, NULL, WNOHANG, NULL);
 	}
-	// parent process makes pid not 0
-
-	// RIGHT HERE IS WHERE THE CLIENT CONNECTS
-	// SO IDEALLY WE WOULD FORK() HERE
-
 	close(cs);
+}
 
+int main(int ac, char **av)
+{
+	int port;
+	int sock;
+
+	port = 0;
+	if (ac != 2)
+		usage(av[1]);
+	port = ft_atoi(av[1]);
+	sock = create_server(port);
+	accept_client(sock);
 	close(sock);
 	return (0);
 }
