@@ -47,8 +47,9 @@ fclean: clean
 	@rm -rf $(NAME_cli)
 	rm -rf server.dSYM
 	rm -rf client.dSYM
+	rm -rf server_dir 
 	@make fclean -C libft/
-
+# TESTING : The remove server_dir should be removed soon once the existing folder case has been handled
 re: fclean all
 
 .PHONY: re clean fclean all

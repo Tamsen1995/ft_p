@@ -9,8 +9,22 @@ void usage(char *str)
 void make_server_directory()
 {
 	char buf[1024];
+	int r;
+	const char *tmp;
+	const char *aux;
+
 	getcwd(buf, 1023);
-	ft_putstr(buf);
+	aux = ft_strdup("/sever_dir");
+	tmp = ft_strjoin((const char *)buf, aux);
+	r = mkdir(tmp, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH);
+	if (r == 0)
+		return;
+	else if (r == -1)
+	{
+		exit(-1);
+	}
+	free(tmp);
+	free(aux);
 }
 
 int create_server(int port)
