@@ -7,11 +7,10 @@ LIBFT = libft/libft.a
 NAME_se = server
 NAME_cli = client
 
-SRC_se = src/server.c \
-		src/server_init.c \
-		src/get_next_line.c
-
-
+SRC_se = src/server/server.c \
+		src/server/server_init.c \
+		src/server/manage_client.c \
+		src/get_next_line.c \
 
 SRC_cli = src/client.c \
 		src/get_next_line.c

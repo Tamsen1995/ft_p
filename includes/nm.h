@@ -76,7 +76,7 @@ typedef struct s_ran_offset
 */
 
 int get_next_line(int const fd, char **line);
-
+void manage_client(int cs, struct s_server_truth *server_truth);
 int create_server(int port);
 char *make_server_directory();
 void usage(char *str);

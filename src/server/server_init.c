@@ -1,4 +1,4 @@
-#include "../includes/nm.h"
+#include "../../includes/nm.h"
 
 void usage(char *str)
 {
