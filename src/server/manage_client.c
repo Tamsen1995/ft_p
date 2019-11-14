@@ -8,6 +8,7 @@ void relay_commands(char *buf, struct s_server_truth *server_truth)
 	if (ft_strcmp(buf, "pwd") == 0)
 	{
 		ft_putstr(server_truth->server_dir_path);
+		// CONTINUER
 	}
 }
 
