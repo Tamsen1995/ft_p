@@ -4,13 +4,19 @@
 // this function relays the commands to their appropiate flow
 void relay_commands(char *buf, struct s_server_truth *server_truth)
 {
-
+	printf(" buf buf :  %s", buf); // TESTING
 	if (ft_strcmp(buf, "pwd") == 0)
 	{
 		printf("\n%d", server_truth->cs);
 		ft_putstr(server_truth->server_dir_path);
 
-		// CONTINUER
+		// Try to send a message back to the cs, maybe with send ?
+		// TESTING
+		// int testing;
+		// testing = send(server_truth->cs, "testing", 8, MSG_OOB);
+		printf("\nbasiiccc - > ");
+
+		// TESTING
 	}
 }
 
@@ -30,5 +36,6 @@ int manage_client(int cs, struct s_server_truth *server_truth)
 			relay_commands(buf, server_truth);
 		return (42);
 	}
+
 	return (4242);
 }

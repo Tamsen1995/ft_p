@@ -27,6 +27,21 @@ int create_client(char *addr, int port)
 	return (sock);
 }
 
+void check_for_output_cmd(char *line)
+{
+	// if ((r = recv(sock, buf, 1023, 0)) > 0)
+	// {
+	// 	buf[r] = '\0';
+	printf("\n-----> LOOK : %s\n", line);
+	// }
+	if (ft_strcmp(line, "pwd") == 0)
+	{
+		ft_putendl("expect output");
+	}
+
+	// CONTINUER
+}
+
 int main(int ac, char **av)
 {
 	int port;
@@ -39,11 +54,13 @@ int main(int ac, char **av)
 
 	char *line;
 	int r = 0;
+
 	while (42)
 	{
-		ft_putstr("chingdao$>:  ");
+		ft_putstr("client_terminal$>:  ");
 		r = get_next_line(0, &line);
 		write(sock, line, ft_strlen(line));
+		check_for_output_cmd(line);
 	}
 	close(sock);
 	return (0);

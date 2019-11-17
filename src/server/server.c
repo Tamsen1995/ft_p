@@ -10,7 +10,6 @@ void accept_client(int sock, struct s_server_truth *server_truth)
 	cs = accept(sock, (struct sockaddr *)&csin, &cslen);
 
 	pid = fork();
-	printf("forking");
 	if (pid == 0)
 	{
 		// child process makes pid 0
@@ -22,6 +21,7 @@ void accept_client(int sock, struct s_server_truth *server_truth)
 	}
 	else if (pid != 0)
 	{
+		printf("\npid of new child -  > %d\n", pid); // TESTING
 		// parent process makes pid not 0
 		wait4(-1, NULL, WNOHANG, NULL);
 	}
