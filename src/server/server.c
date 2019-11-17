@@ -8,20 +8,23 @@ void accept_client(int sock, struct s_server_truth *server_truth)
 	struct sockaddr_in csin;
 
 	cs = accept(sock, (struct sockaddr *)&csin, &cslen);
+
 	pid = fork();
+	printf("forking");
 	if (pid == 0)
 	{
 		// child process makes pid 0
 		// in here the server has to manage the client's requests
-		while (42)
-			manage_client(cs, server_truth);
+		while (manage_client(cs, server_truth) != 4242)
+			;
+		close(cs);
+		exit(1);
 	}
 	else if (pid != 0)
 	{
 		// parent process makes pid not 0
 		wait4(-1, NULL, WNOHANG, NULL);
 	}
-	close(cs);
 }
 
 int main(int ac, char **av)
@@ -41,7 +44,8 @@ int main(int ac, char **av)
 		ft_putendl("A dir path could not be created");
 		exit(-1);
 	}
-	accept_client(sock, &server_truth);
+	while (42)
+		accept_client(sock, &server_truth);
 	close(sock);
 	return (0);
 }

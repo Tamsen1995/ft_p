@@ -28,6 +28,7 @@
 
 typedef struct s_server_truth
 {
+	int cs; // the fd of the connected socket
 	char *server_dir_path;
 } t_server_truth;
 
@@ -76,12 +77,11 @@ typedef struct s_ran_offset
 */
 
 int get_next_line(int const fd, char **line);
-void manage_client(int cs, struct s_server_truth *server_truth);
+int manage_client(int cs, struct s_server_truth *server_truth);
 int create_server(int port);
 char *make_server_directory();
 void usage(char *str);
 void accept_client(int sock, struct s_server_truth *server_truth);
-void manage_client(int cs, struct s_server_truth *server_truth);
 void relay_commands(char *buf, struct s_server_truth *server_truth);
 
 #endif
