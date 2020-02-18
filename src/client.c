@@ -9,7 +9,7 @@
 
 void usage(char *str)
 {
-	ft_printf("Usage: %s <port>");
+	ft_printf("Usage: %s <port>", str);
 	exit(-1);
 }
 
