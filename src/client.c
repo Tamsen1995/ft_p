@@ -1,12 +1,6 @@
 
 #include "../includes/nm.h"
 
-// void usage(char *str)
-// {
-// 	ft_printf("Usage: %s <port>\n", str);
-// 	exit(-1);
-// }
-
 void usage(char *str)
 {
 	ft_printf("Usage: %s <port>", str);
@@ -35,29 +29,10 @@ int create_client(char *addr, int port)
 	return (sock);
 }
 
-// void check_for_output_cmd(char *line)
-// {
-// 	// if ((r = recv(sock, buf, 1023, 0)) > 0)
-// 	// {
-// 	// 	buf[r] = '\0';
-// 	printf("\n-----> LOOK : %s\n", line);
-// 	// }
-// 	if (ft_strcmp(line, "pwd") == 0)
-// 	{
-// 		ft_putendl("expect output");
-// 	}
-
-// 	// CONTINUER
-// }
-
 void check_for_output_cmd(char *line)
 {
 	size_t r;
 
-	// r = 0;
-	// if ((r = recv(sock, buf, 1023, 0)) > 0)
-	// {
-	// }
 	r = 0;
 	ft_printf("%s", line);
 }
