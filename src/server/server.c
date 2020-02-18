@@ -8,12 +8,10 @@ void accept_client(int sock, struct s_server_truth *server_truth)
 	struct sockaddr_in csin;
 
 	cs = accept(sock, (struct sockaddr *)&csin, &cslen);
-
 	pid = fork();
 	if (pid == 0)
 	{
 		// child process makes pid 0
-		// in here the server has to manage the client's requests
 		while (manage_client(cs, server_truth) != 4242)
 			;
 		close(cs);
@@ -21,8 +19,8 @@ void accept_client(int sock, struct s_server_truth *server_truth)
 	}
 	else if (pid != 0)
 	{
-		printf("\npid of new child -  > %d\n", pid); // TESTING
-		// parent process makes pid not 0
+		ft_printf("\npid of new child - > %d\n", pid); // TESTING
+													   // parent process makes pid not 0
 		wait4(-1, NULL, WNOHANG, NULL);
 	}
 }
